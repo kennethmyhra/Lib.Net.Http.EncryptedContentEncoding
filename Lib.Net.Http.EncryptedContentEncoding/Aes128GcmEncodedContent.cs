@@ -65,12 +65,20 @@ namespace Lib.Net.Http.EncryptedContentEncoding
             _keyId = keyId;
             _recordSize = recordSize;
 
-            Headers.ContentType = new MediaTypeHeaderValue(_mediaType);
-            Headers.ContentEncoding.Add(Constants.ENCRYPTED_CONTENT_ENCODING);
+            _contentToBeEncrypted.Headers.CopyTo(Headers);
+            if (!Headers.ContentEncoding.Contains(Constants.ENCRYPTED_CONTENT_ENCODING))
+            {
+                Headers.ContentEncoding.Add(Constants.ENCRYPTED_CONTENT_ENCODING);
+            }
+            if (Headers.ContentType == null)
+            {
+                Headers.ContentType = new MediaTypeHeaderValue(_mediaType);
+            }
         }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Serialize the HTTP content to a stream as an asynchronous operation.
         /// </summary>

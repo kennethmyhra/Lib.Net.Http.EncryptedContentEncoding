@@ -26,6 +26,7 @@ namespace Lib.Net.Http.EncryptedContentEncoding
         public Aes128GcmDecodedContent(HttpContent contentToBeDecrypted, Func<string, byte[]> keyLocator)
         {
             _contentToBeDecrypted = contentToBeDecrypted;
+            _contentToBeDecrypted.Headers.CopyTo(Headers);
             _keyLocator = keyLocator;
         }
         #endregion
